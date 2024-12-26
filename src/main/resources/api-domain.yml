@@ -1,0 +1,12 @@
+api-domain:
+  url:
+    main:
+      main-url: https://developer-lostark.game.onstove.com
+
+    market:
+      items: /markets/items
+      options: /markets/options
+
+    auction:
+      items: /auctions/items
+      options: /auctions/options

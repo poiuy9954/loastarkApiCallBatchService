@@ -1,0 +1,6 @@
+#spring.application.name=lostarkApiCallBatchService
+spring:
+  application:
+    name: lostarkApiCallBatchService
+  config:
+    import: api-domain.yml, jwt.yml
