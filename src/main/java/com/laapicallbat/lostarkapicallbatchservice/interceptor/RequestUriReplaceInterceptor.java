@@ -28,12 +28,4 @@ public class RequestUriReplaceInterceptor implements ClientHttpRequestIntercepto
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         return null;
     }
-
-    private String replaceUri(String uri){
-        /*
-        * @{main.main-url.market.items} 형식의 uri를 받아
-        * DomainConfig에 있는 값들로 변경
-        * */
-        return "";
-    }
 }

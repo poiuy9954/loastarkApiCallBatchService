@@ -1,7 +1,7 @@
 api-domain:
-  url:
-    main:
-      main-url: https://developer-lostark.game.onstove.com
+  uri:
+    domainName:
+      home: https://developer-lostark.game.onstove.com
 
     market:
       items: /markets/items
