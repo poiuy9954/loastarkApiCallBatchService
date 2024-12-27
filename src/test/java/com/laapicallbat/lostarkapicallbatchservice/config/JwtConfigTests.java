@@ -1,5 +1,6 @@
 package com.laapicallbat.lostarkapicallbatchservice.config;
 
+import com.laapicallbat.lostarkapicallbatchservice.aa.config.JwtConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

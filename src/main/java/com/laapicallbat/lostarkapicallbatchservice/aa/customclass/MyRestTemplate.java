@@ -1,12 +1,12 @@
-package com.laapicallbat.lostarkapicallbatchservice.config;
+package com.laapicallbat.lostarkapicallbatchservice.aa.customclass;
 
+import com.laapicallbat.lostarkapicallbatchservice.aa.config.DomainConfig;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.Map;
 import java.util.Set;
 

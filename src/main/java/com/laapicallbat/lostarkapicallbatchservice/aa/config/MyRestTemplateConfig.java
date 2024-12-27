@@ -1,6 +1,7 @@
-package com.laapicallbat.lostarkapicallbatchservice.config;
+package com.laapicallbat.lostarkapicallbatchservice.aa.config;
 
-import com.laapicallbat.lostarkapicallbatchservice.interceptor.RequestJwtTokenAddInterceptor;
+import com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate;
+import com.laapicallbat.lostarkapicallbatchservice.aa.interceptor.RequestJwtTokenAddInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package com.laapicallbat.lostarkapicallbatchservice.config;
+package com.laapicallbat.lostarkapicallbatchservice.aa.config;
 
 
 import lombok.Getter;

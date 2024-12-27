@@ -1,6 +1,6 @@
-package com.laapicallbat.lostarkapicallbatchservice.interceptor;
+package com.laapicallbat.lostarkapicallbatchservice.aa.interceptor;
 
-import com.laapicallbat.lostarkapicallbatchservice.config.JwtConfig;
+import com.laapicallbat.lostarkapicallbatchservice.aa.config.JwtConfig;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -23,7 +23,6 @@ public class RequestJwtTokenAddInterceptor implements ClientHttpRequestIntercept
         request.getHeaders().add("Authorization", "Bearer " + jwtConfig.getToken());
         request.getHeaders().add("Content-Type", "application/json");
         request.getHeaders().add("Accept", "application/json");
-        System.out.println("asdad:   " + request.toString());
         return execution.execute(request, body);
     }
 }
