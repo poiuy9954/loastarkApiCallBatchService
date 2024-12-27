@@ -1,5 +1,5 @@
 api-domain:
-  uri:
+  url:
     domainName:
       home: https://developer-lostark.game.onstove.com
 

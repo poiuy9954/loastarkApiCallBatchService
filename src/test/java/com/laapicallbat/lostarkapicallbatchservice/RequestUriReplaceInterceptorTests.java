@@ -29,9 +29,9 @@ public class RequestUriReplaceInterceptorTests {
             String uriAlias = matcher.group();
             String[] splitAlias = uriAlias.replace("@{","").replace("}","").split("\\.");
             System.out.println(Arrays.toString(splitAlias));
-            System.out.println(domainConfig.getUri());
-            String main = domainConfig.getUri().get(splitAlias[0]).get(splitAlias[1]);
-            String sub = domainConfig.getUri().get(splitAlias[2]).get(splitAlias[3]);
+            System.out.println(domainConfig.getUrl());
+            String main = domainConfig.getUrl().get(splitAlias[0]).get(splitAlias[1]);
+            String sub = domainConfig.getUrl().get(splitAlias[2]).get(splitAlias[3]);
             String fullUri = main+sub;
             System.out.println(fullUri);
             uri = uri.replace(uriAlias,fullUri);
