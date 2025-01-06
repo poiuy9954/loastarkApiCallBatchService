@@ -37,6 +37,21 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+//  gson
+    implementation 'com.google.code.gson:gson:2.11.0'
+
+
+//  logback제외
+    configurations {
+        all {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        }
+    }
+//  log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.4.1'
+
+
 }
 
 tasks.named('test') {

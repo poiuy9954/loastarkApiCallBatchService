@@ -64,19 +64,5 @@ public class DomainConfigTests {
                 });
     }
 
-    @Test
-    public void test(){
-
-        String aliasUri4 = "@{domainName.home.market.options}";
-
-        URI uri = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("asdasd.com")
-                .path(aliasUri4)
-                .build().toUri();
-
-        System.out.println(uri);
-    }
-
 
 }
