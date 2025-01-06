@@ -51,6 +51,9 @@ dependencies {
 //  log4j2
     implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.4.1'
 
+//  springboot validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.1'
+
 
 }
 

@@ -1,5 +1,6 @@
 package com.laapicallbat.lostarkapicallbatchservice.biz.auction.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.List;
@@ -10,15 +11,19 @@ import java.util.List;
 @Data
 public class LostarkAuctionItemsRequestDTO {
 
-    private String itemLevelMin;
-    private String itemLevelMax;
-    private String itemGradeQuality;
-    private String itemUpgradeLevel;
-    private String itemTradeAllowCount;
+    private int itemLevelMin;
+    private int itemLevelMax;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int itemGradeQuality;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int itemUpgradeLevel;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int itemTradeAllowCount;
     private Sort sort;
-    private String categoryCode;
+    private int categoryCode;
     private String characterClass;
-    private String itemTier;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int itemTier;
     private String itemGrade;
     private String itemName;
     private int pageNo;
@@ -27,7 +32,7 @@ public class LostarkAuctionItemsRequestDTO {
     private List<Option> EtcOptions;
 
     @Builder
-    public LostarkAuctionItemsRequestDTO(String itemLevelMin, String itemLevelMax, String itemGradeQuality, String itemUpgradeLevel, String itemTradeAllowCount, Sort sort, String categoryCode, String characterClass, String itemTier, String itemGrade, String itemName, int pageNo, SortCondition sortCondition, List<Option> skillOptions, List<Option> etcOptions) {
+    public LostarkAuctionItemsRequestDTO(int itemLevelMin, int itemLevelMax, int itemGradeQuality, int itemUpgradeLevel, int itemTradeAllowCount, Sort sort, int categoryCode, String characterClass, int itemTier, String itemGrade, String itemName, int pageNo, SortCondition sortCondition, List<Option> skillOptions, List<Option> etcOptions) {
         this.itemLevelMin = itemLevelMin;
         this.itemLevelMax = itemLevelMax;
         this.itemGradeQuality = itemGradeQuality;
@@ -45,8 +50,10 @@ public class LostarkAuctionItemsRequestDTO {
         EtcOptions = etcOptions;
     }
 
+
     @NoArgsConstructor
     @Getter
+    @ToString
     public static class Option {
         @Builder
         public Option(int firstOption, int secondOption, int minValue, int maxValue) {
@@ -56,9 +63,13 @@ public class LostarkAuctionItemsRequestDTO {
             MaxValue = maxValue;
         }
 
+        @JsonInclude(JsonInclude.Include.NON_DEFAULT)
         private int FirstOption;
+        @JsonInclude(JsonInclude.Include.NON_DEFAULT)
         private int SecondOption;
+        @JsonInclude(JsonInclude.Include.NON_DEFAULT)
         private int MinValue;
+        @JsonInclude(JsonInclude.Include.NON_DEFAULT)
         private int MaxValue;
     }
 
