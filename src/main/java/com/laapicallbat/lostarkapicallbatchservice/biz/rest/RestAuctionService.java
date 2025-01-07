@@ -2,6 +2,7 @@ package com.laapicallbat.lostarkapicallbatchservice.biz.rest;
 
 import com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate;
 import com.laapicallbat.lostarkapicallbatchservice.biz.auction.dto.LostarkAuctionItemsRequestDTO;
+import com.laapicallbat.lostarkapicallbatchservice.biz.auction.dto.LostarkAuctionItemsResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,9 @@ public class RestAuctionService {
         return auctionOpt.getBody();
     }
 
-    public Map<String,String> postItems(LostarkAuctionItemsRequestDTO lostarkAuctionItemsRequestDTO){
+    public LostarkAuctionItemsResponseDTO postItems(LostarkAuctionItemsRequestDTO lostarkAuctionItemsRequestDTO){
         String url = "@{domainName.home.auction.items}";
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, lostarkAuctionItemsRequestDTO, Map.class);
+        ResponseEntity<LostarkAuctionItemsResponseDTO> response = restTemplate.postForEntity(url, lostarkAuctionItemsRequestDTO, LostarkAuctionItemsResponseDTO.class);
         return response.getBody();
     }
 

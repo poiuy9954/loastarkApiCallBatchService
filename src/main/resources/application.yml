@@ -12,7 +12,10 @@ logging:
     com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate: DEBUG
     com.laapicallbat.lostarkapicallbatchservice.biz: DEBUG
     com.laapicallbat.lostarkapicallbatchservice.aa: debug
+    org.junit: debug
+    org.springframework.test: debug
 #  pattern:
 #    console: "{%thread}[%p](%C-%M)%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
 
 
