@@ -3,7 +3,12 @@ spring:
   application:
     name: lostarkApiCallBatchService
   config:
-    import: api-domain.yml, jwt.yml
+    import: api-domain.yml, jwt.yml, searchdata.yml
+  datasource:
+    url: jdbc:mysql://localhost:3306/lostarkDB?serverTimezone=UTC+9&characterEncoding=UTF-8
+    username: loabd_user
+    password: user1120
+    driver-class-name: com.mysql.cj.jdbc.Driver
 logging:
   level:
     root: info
@@ -14,6 +19,7 @@ logging:
     com.laapicallbat.lostarkapicallbatchservice.aa: debug
     org.junit: debug
     org.springframework.test: debug
+    com.laapicallbat.lostarkapicallbatchservice.config: DEBUG
 #  pattern:
 #    console: "{%thread}[%p](%C-%M)%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
