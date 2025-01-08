@@ -1,4 +1,4 @@
-package com.laapicallbat.lostarkapicallbatchservice.biz.rest;
+package com.laapicallbat.lostarkapicallbatchservice.biz.rest.auction.service;
 
 import com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate;
 import com.laapicallbat.lostarkapicallbatchservice.biz.auction.dto.LostarkAuctionItemsRequestDTO;
