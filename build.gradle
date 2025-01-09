@@ -4,6 +4,10 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
+ext {
+    springCloudVersion = "2024.0.0"
+}
+
 group = 'com.laApiCallBat'
 version = '0.0.1-SNAPSHOT'
 
@@ -30,6 +34,7 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 //    lombok
     compileOnly 'org.projectlombok:lombok'
@@ -48,6 +53,9 @@ dependencies {
 //  gson
     implementation 'com.google.code.gson:gson:2.11.0'
 
+    implementation('org.springframework.cloud:spring-cloud-starter-bootstrap')
+
+
 
 //  logback제외
     configurations {
@@ -62,6 +70,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation:3.4.1'
 
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
 }
 
 tasks.named('test') {
