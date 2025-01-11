@@ -1,4 +1,5 @@
 #spring.application.name=lostarkApiCallBatchService
+service: LOAC-BAT
 spring:
   application:
     name: lostarkApiCallBatchService

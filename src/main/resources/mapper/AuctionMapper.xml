@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.laapicallbat.lostarkapicallbatchservice.biz.auction.mapper.AuctionMapper">
+    <update id="update">
+        UPDATE lostarkDB.TB_ITEM_EXCHANGE
+        <set>
+            <if test="itemBidPrice != null">ITEM_BID_PRICE = #{itemBidPrice},</if>
+            <if test="itemScrapUpdateDttm != null">ITEM_SCRAP_UPDATE_DTTM = #{itemScrapUpdateDttm},</if>
+            <if test="itemScrapCount != null">ITEM_SCRAP_COUNT = #{itemScrapCount}</if>
+        </set>
+        WHERE (ITEM_CODE,ITEM_NAME,ITEM_END_DTTM) = (#{itemCode},#{itemName},#{itemEndDttm})
+    </update>
+</mapper>
