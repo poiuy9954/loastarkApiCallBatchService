@@ -3,6 +3,8 @@ package com.laapicallbat.lostarkapicallbatchservice.biz.auction.mapper;
 import com.laapicallbat.lostarkapicallbatchservice.biz.auction.entity.ItemExchangeEntity;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,10 +16,16 @@ import java.util.List;
 
 @SpringBootTest
 @Log4j2
+@Transactional
 public class AuctionMapperTests {
 
     @Autowired
     private AuctionMapper auctionMapper;
+
+    @BeforeAll
+    public static void beforeAll() {
+
+    }
 
     @Test
     public void now_Test() {
@@ -40,7 +48,8 @@ public class AuctionMapperTests {
         String itemName = "더미아이템";
         LocalDateTime endDTTM = LocalDateTime.parse("2025-01-12T01:04:47.753",DateTimeFormatter.ISO_DATE_TIME);
         ItemExchangeEntity itemExchangeEntity = auctionMapper.selectById(itemCode, itemName, endDTTM);
-        log.debug("item :: {}", itemExchangeEntity);
+
+
     }
 
 
@@ -62,7 +71,8 @@ public class AuctionMapperTests {
         itemExchangeEntity.setItemScrapUpdateDttm(date);
         itemExchangeEntity.setItemScrapCount(1);
 
-        auctionMapper.insert(itemExchangeEntity);
+        int result = auctionMapper.insert(itemExchangeEntity);
+        Assertions.assertEquals(1, result);
     }
 
     @Test
@@ -77,7 +87,7 @@ public class AuctionMapperTests {
         itemExchangeEntity.setItemEndDttm(endDate);
         itemExchangeEntity.setItemScrapUpdateDttm(date);
 
-        auctionMapper.update(itemExchangeEntity);
+        int result = auctionMapper.update(itemExchangeEntity);
 
         ItemExchangeEntity itemExchangeEntity2 = new ItemExchangeEntity();
         itemExchangeEntity2.setItemCode(1);
@@ -85,10 +95,7 @@ public class AuctionMapperTests {
         itemExchangeEntity2.setItemEndDttm(endDate);
         ItemExchangeEntity print = auctionMapper.selectById(1,"테스트터미1",endDate);
 
-        log.debug("print :: {}", print);
-
-//        2025-01-11 11:23:52.514
-//        2025-01-11 11:23:52.514
+        Assertions.assertEquals(1,result);
 
     }
 }
