@@ -1,0 +1,15 @@
+version: '3'
+services:
+    db:
+        image: mysql:latest
+        environment:
+            MYSQL_DATABASE: 'lostarkDB'
+            MYSQL_USER: 'loadb_user'
+            MYSQL_PASSWORD: 'user1120'
+            MYSQL_ROOT_PASSWORD: 'root4'
+        ports:
+            - '3306:3306'
+        volumes:
+            - 'mysqldata:/var/lib/mysql'
+volumes:
+    mysqldata:

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    
+    <!-- 콘솔 출력용 Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <!-- 파일 출력용 Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/lostark-api-batch.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/lostark-api-batch.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 에러 로그 전용 Appender -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/lostark-api-batch-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/lostark-api-batch-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- API 호출 로그 전용 Appender (RestTemplate 등) -->
+    <appender name="API_CALL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/lostark-api-calls.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/lostark-api-calls.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 배치 작업 로그 전용 Appender -->
+    <appender name="BATCH_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/lostark-batch-jobs.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/lostark-batch-jobs.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>15</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 프로파일별 설정 -->
+    <springProfile name="local,dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        
+        <!-- 개발환경에서 디버그 로그 설정 -->
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springframework.web.client.RestTemplate" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate" level="DEBUG" additivity="false">
+            <appender-ref ref="API_CALL_FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.biz" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.config" level="DEBUG"/>
+        
+        <!-- 배치 관련 로그 -->
+        <logger name="org.springframework.batch" level="DEBUG" additivity="false">
+            <appender-ref ref="BATCH_FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        
+        <!-- 테스트 관련 로그 -->
+        <logger name="org.junit" level="DEBUG"/>
+        <logger name="org.springframework.test" level="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        
+        <!-- 운영환경에서는 필요한 로그만 -->
+        <logger name="org.springframework.web" level="WARN"/>
+        <logger name="org.springframework.web.client.RestTemplate" level="INFO"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate" level="INFO" additivity="false">
+            <appender-ref ref="API_CALL_FILE"/>
+        </logger>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.biz" level="INFO"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa" level="INFO"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.config" level="INFO"/>
+        
+        <!-- 배치 관련 로그 -->
+        <logger name="org.springframework.batch" level="INFO" additivity="false">
+            <appender-ref ref="BATCH_FILE"/>
+        </logger>
+    </springProfile>
+
+    <!-- 기본 설정 (프로파일이 지정되지 않은 경우) -->
+    <springProfile name="!local &amp; !dev &amp; !prod">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+        
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springframework.web.client.RestTemplate" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa.customclass.MyRestTemplate" level="DEBUG" additivity="false">
+            <appender-ref ref="API_CALL_FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.biz" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.aa" level="DEBUG"/>
+        <logger name="com.laapicallbat.lostarkapicallbatchservice.config" level="DEBUG"/>
+        
+        <!-- 배치 관련 로그 -->
+        <logger name="org.springframework.batch" level="INFO" additivity="false">
+            <appender-ref ref="BATCH_FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+    </springProfile>
+
+    <!-- 외부 라이브러리 로그 레벨 조정 -->
+    <logger name="org.apache.http" level="WARN"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.mybatis" level="INFO"/>
+    <logger name="com.mysql.cj" level="WARN"/>
+    <logger name="org.springframework.kafka" level="INFO"/>
+    
+    <!-- SQL 로그 (MyBatis) -->
+    <logger name="mapper" level="DEBUG"/>
+    <logger name="com.laapicallbat.lostarkapicallbatchservice.mapper" level="DEBUG"/>
+    
+</configuration>
