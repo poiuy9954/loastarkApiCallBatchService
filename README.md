@@ -12,7 +12,8 @@ api 호출 필수 구현요소(parse, url alias, dto..) 구현 후 서비스 구
 ##main 기능
 - [ ] 매 분 100회 이내의 API Call을 통하여 데이터 추출
 - [X] API Call을 위한 응답객체 생성
-- [ ] 데이터 저장 후 처리(Kafka event발행등)
+- [ ] 스케쥴 또는 spring event발행하여 주기적으로 평균가격 업데이트
+- [ ] 추 후 디스코드 봇으로 알람기능
 
 ##architecture 부분
 - [X] Spring Cloud config 서버 및 클라이언트 구축하여 사용(config 통합 및 암호화)
