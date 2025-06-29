@@ -1,0 +1,13 @@
+###
+
+# curl -X POST http://localhost:8080/api/batch/gem-auction-scrap
+POST http://localhost:8080/api/batch/gem-auction-scrap
+
+
+###
+
+POST http://localhost:8080/api/batch/health
+###
+
+
+POST http://localhost:8080/api/batch/health

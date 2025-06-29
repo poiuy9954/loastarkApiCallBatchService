@@ -32,20 +32,6 @@ public class BatchController {
     private final Job gemAuctionScrapJob;
 
     /**
-     * 배치 상태 확인 (헬스체크용) - GET 방식
-     */
-    @GetMapping("/test")
-    public ResponseEntity<Map<String, Object>> batchTestGet() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "healthy");
-        response.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        response.put("service", "Lost Ark Auction Batch Service");
-        response.put("message", "GET Test endpoint working - Security Disabled");
-        
-        return ResponseEntity.ok(response);
-    }
-
-    /**
      * 보석 경매장 데이터 스크래핑 배치 수동 실행
      */
     @PostMapping("/gem-auction-scrap")
@@ -82,6 +68,21 @@ public class BatchController {
             
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    /**
+     * 스케줄러 상태 확인
+     */
+    @GetMapping("/scheduler-status")
+    public ResponseEntity<Map<String, Object>> getSchedulerStatus() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("schedulerEnabled", true);
+        response.put("nextRunTime", "매 2분마다 (0 */2 * * * *)");
+        response.put("currentTime", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        response.put("environment", "local");
+        response.put("message", "스케줄러가 활성화되어 있습니다.");
+        
+        return ResponseEntity.ok(response);
     }
 
     /**
