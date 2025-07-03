@@ -1,15 +1,85 @@
-version: '3'
 services:
     db:
-        image: mysql:latest
-        environment:
-            MYSQL_DATABASE: 'lostarkDB'
-            MYSQL_USER: 'loadb_user'
-            MYSQL_PASSWORD: 'user1120'
-            MYSQL_ROOT_PASSWORD: 'root4'
+        image: mysql:8.0
+        container_name: mysql-lostark-db
         ports:
             - '3306:3306'
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         volumes:
             - 'mysqldata:/var/lib/mysql'
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - n_db
+
+    config-server:
+        build:
+            context: /Users/gimjinho/IdeaProjects/LostarkConfigServer
+            dockerfile: Dockerfile
+        image: jhkim/lostark-config-server:latest
+        ports:
+            -   "8888:8888"
+        environment:
+            CONFIG_SERVER_ENCRYPT_KEY: ${CONFIG_SERVER_ENCRYPT_KEY}
+            CONFIG_SERVER_GIT_TOKEN: ${CONFIG_SERVER_GIT_TOKEN}
+            CONFIG_SERVER_GIT_URI: ${CONFIG_SERVER_GIT_URI}
+            CONFIG_SERVER_GIT_USERNAME: ${CONFIG_SERVER_GIT_USERNAME}
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 60s
+
+        networks:
+            - n_config
+
+    batch-server:
+        build:
+            context: /Users/gimjinho/IdeaProjects/lostarkApiCallBatchService
+            dockerfile: Dockerfile
+        image: jhkim/lostark-api-call-batch-service:latest
+        ports:
+            - "8080:8080"
+        environment:
+            CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
+        depends_on:
+            db :
+                condition: service_healthy
+            config-server :
+                condition: service_healthy
+        networks:
+            - n_config
+            - n_db
+
+    front-server:
+        build:
+            context: /Users/gimjinho/IdeaProjects/gameItemViewer
+            dockerfile: Dockerfile
+        image: jhkim/lostark-front-server:latest
+        ports:
+            - "3000:3000"
+        environment:
+            CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
+        depends_on:
+            db:
+                condition: service_healthy
+            config-server:
+                condition: service_healthy
+        networks:
+            - n_config
+            - n_db
+
 volumes:
-    mysqldata:
+    mysqldata: {}
+
+networks:
+    n_config: {}
+    n_db: {}
