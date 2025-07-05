@@ -40,3 +40,5 @@ out/
 ### Logs ###
 logs/
 *.log
+
+docker/.env

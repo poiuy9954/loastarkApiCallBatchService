@@ -9,6 +9,7 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            TZ: "Asia/Seoul"
         volumes:
             - 'mysqldata:/var/lib/mysql'
         healthcheck:
@@ -20,10 +21,11 @@ services:
             - n_db
 
     config-server:
-        build:
-            context: /Users/gimjinho/IdeaProjects/LostarkConfigServer
-            dockerfile: Dockerfile
-        image: jhkim/lostark-config-server:latest
+        image: poiuy9954/jhkim-project:config-server-0.0.1
+        #        build:
+#            context: /Users/gimjinho/IdeaProjects/LostarkConfigServer
+#            dockerfile: Dockerfile
+#        image: jhkim/lostark-config-server:latest
         ports:
             -   "8888:8888"
         environment:
@@ -31,6 +33,8 @@ services:
             CONFIG_SERVER_GIT_TOKEN: ${CONFIG_SERVER_GIT_TOKEN}
             CONFIG_SERVER_GIT_URI: ${CONFIG_SERVER_GIT_URI}
             CONFIG_SERVER_GIT_USERNAME: ${CONFIG_SERVER_GIT_USERNAME}
+            SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+            TZ: "Asia/Seoul"
         healthcheck:
             test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
             interval: 30s
@@ -42,14 +46,19 @@ services:
             - n_config
 
     batch-server:
-        build:
-            context: /Users/gimjinho/IdeaProjects/lostarkApiCallBatchService
-            dockerfile: Dockerfile
-        image: jhkim/lostark-api-call-batch-service:latest
+        image: poiuy9954/jhkim-project:batch-server-0.0.1
+        #        build:
+#            context: /Users/gimjinho/IdeaProjects/lostarkApiCallBatchService
+#            dockerfile: Dockerfile
+#        image: jhkim/lostark-api-call-batch-service:latest
         ports:
             - "8080:8080"
         environment:
             CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
+            SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+            MYSQL_DATA_HOSTNAME: ${MYSQL_DATA_HOSTNAME}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            TZ: "Asia/Seoul"
         depends_on:
             db :
                 condition: service_healthy
@@ -60,14 +69,19 @@ services:
             - n_db
 
     front-server:
-        build:
-            context: /Users/gimjinho/IdeaProjects/gameItemViewer
-            dockerfile: Dockerfile
-        image: jhkim/lostark-front-server:latest
+        image: poiuy9954/jhkim-project:viewer-server-0.0.1
+        #        build:
+#            context: /Users/gimjinho/IdeaProjects/gameItemViewer
+#            dockerfile: Dockerfile
+#        image: jhkim/lostark-front-server:latest
         ports:
-            - "3000:3000"
+            - "9090:9090"
         environment:
             CONFIG_SERVER_URL: ${CONFIG_SERVER_URL}
+            SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+            MYSQL_DATA_HOSTNAME: ${MYSQL_DATA_HOSTNAME}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            TZ: "Asia/Seoul"
         depends_on:
             db:
                 condition: service_healthy
